@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { deleteCars, editCar,setSelectedCars,setLoading } from '../Store/carSlice';
+import { deleteCars, editCar, setSelectedCars, setLoading } from '../Store/carSlice';
 import { useDispatch, useSelector } from "react-redux";
 
 function Car_list() {
@@ -8,23 +8,23 @@ function Car_list() {
   const selectedCars = useSelector((state) => state.cars.selectedCars);
   const loading = useSelector((state) => state.cars.loading);
   const handleSelect = (id) => {
-    
+
     const updatedSelectedCars = selectedCars.includes(id)
       ? selectedCars.filter((carId) => carId !== id)
       : [...selectedCars, id];
-    dispatch(setSelectedCars(updatedSelectedCars)); 
+    dispatch(setSelectedCars(updatedSelectedCars));
   };
 
   const handleDelete = () => {
-    dispatch(deleteCars(selectedCars)); 
+    dispatch(deleteCars(selectedCars));
     setSelectedCars([]);
   };
 
   const handleEdit = (car) => {
-    dispatch(editCar(car)); 
-  };  
+    dispatch(editCar(car));
+  };
 
-  
+
   useEffect(() => {
     // Set loading to true when fetching starts
     dispatch(setLoading(true));
@@ -36,32 +36,46 @@ function Car_list() {
     }, 1000);
   }, [dispatch]);
 
- 
+
   if (loading) return <p className="text-center">LOADING...</p>;
 
   return (
-    <div className="p-4">
-      <h2 className="text-xl font-bold">Car List</h2>
+    <>
+
+
+<div className="flex items-center justify-center mt-10">
+  <div className="w-full max-w-md p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-8">
+    <div className="flex items-center justify-between mb-4">
+      <h5 className="md:text-2xl font-bold leading-none text-primary50">All Cars</h5>
+    </div>
+    <div className="flow-root">
       {cars.map((car) => (
-        <div key={car.id} className="flex items-center justify-between p-2 border-b">
-          <div>
-            <input
-              type="checkbox"
-              onChange={() => handleSelect(car.id)}
-              checked={selectedCars.includes(car.id)}
-            />
-            <span className="ml-2">{car.model}</span>
-          </div>
-          <div>
-            <button
-              onClick={() => handleEdit(car)}
-              className="p-1 text-blue-500 hover:underline"
-            >
-              Edit
-            </button>
-          </div>
-        </div>
+        <ul key={car.id} role="list" className="divide-y divide-gray-200">
+          <li className="py-3 sm:py-4">
+            <div className="flex items-center">
+              <div className="flex-1 min-w-0 ms-4">
+                <p className="text-xl font-medium text-primary50 truncate">
+                  <span className="">{car.model}</span>
+                </p>
+              </div>
+              <div className="inline-flex items-center text-base font-semibold text-primary50">
+                <input
+                  type="checkbox"
+                  onChange={() => handleSelect(car.id)}
+                  checked={selectedCars.includes(car.id)}
+                />
+                <button
+                  onClick={() => handleEdit(car)}
+                  className="p-1 text-blue-500 hover:underline"
+                >
+                  Edit
+                </button>
+              </div>
+            </div>
+          </li>
+        </ul>
       ))}
+      
       {selectedCars.length > 0 && (
         <button
           onClick={handleDelete}
@@ -71,6 +85,13 @@ function Car_list() {
         </button>
       )}
     </div>
+  </div>
+</div>
+
+
+
+    </>
+
   );
 }
 export default Car_list;

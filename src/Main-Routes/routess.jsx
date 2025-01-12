@@ -26,7 +26,7 @@ function Routess() {
   return (
     <Router>
       <div className="container mx-auto p-4">
-        <h1 className="text-2xl font-bold text-center">Car Management Application</h1>
+        <h1 className="text-2xl font-bold text-center text-primary50">Car Management Application</h1>
         <Routes>
           <Route path="/" element={<Add_Car />} />
           <Route path="/cars" element={<Car_list />} />
