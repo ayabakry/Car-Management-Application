@@ -1,47 +1,55 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from 'react-redux';
+import { addCar, editCar, setCars } from '../Store/carSlice';
 
-function Add_Car({ addCar, editCar, editCarData, isEditing, setIsEditing }) {
-  const navigate = useNavigate();
+function Add_Car() {
   const [car, setCar] = useState({
     model: "",
     price: "",
     color: "",
     manufactureDate: "",
   });
+  const [isEditing, setIsEditing] = useState(false);
+  const dispatch = useDispatch();
+  const cars = useSelector((state) => state.cars.cars);
+  const navigate = useNavigate();
+
 
   useEffect(() => {
-    if (editCarData) {
-      setCar(editCarData); // Populate form with the selected car's data
-    } else {
-      setCar({ model: "", price: "", color: "", manufactureDate: "" }); // Clear form for adding new car
+    if (car.id) {
+      setIsEditing(true);
     }
-  }, [editCarData]);
+  }, [car.id]);
+
+
+
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setCar({ ...car, [name]: value });
   };
 
+
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!car.model || !car.price || !car.color || !car.manufactureDate) {
-      alert("All fields are required");
+      alert('All fields are required');
       return;
     }
-
     if (isEditing) {
-      editCar(car); // Save the changes when editing
+      dispatch(editCar(car)); // Dispatch the edit action
     } else {
-      addCar({ ...car, id: Date.now() }); // Add new car
+      dispatch(addCar({ ...car, id: Date.now() })); // Dispatch the add action
     }
-    setCar({ model: "", price: "", color: "", manufactureDate: "" }); // Clear the form after submission
-    navigate("/cars"); // Navigate to the car list page after submission
+    setCar({ id: null, model: '', price: '', color: '', manufactureDate: '' });
+    setIsEditing(false);
+    navigate('/cars'); // Navigate to the car list page after submission
   };
   return (
     <div className="relative flex flex-col md:flex-row justify-between ">
       <div className="container w-full md:w-[calc(100%-270px)] lg:w-[calc(100%-280px)] pt-10 pr-8 lg:pr-10 md:mr-[270px] lg:mr-[280px]">
-        <h2 className="mt-10 text-left md:text-3xl font-bold leading-9 tracking-tight text-primary400 font-sans ml-10">
+        <h2 className="mt-10 text-left md:text-3xl font-bold leading-9 tracking-tight text-primary50 font-sans ml-10">
           Add Car
         </h2>
         <br></br>
@@ -52,7 +60,7 @@ function Add_Car({ addCar, editCar, editCarData, isEditing, setIsEditing }) {
           <div className="mb-5">
             <label
               htmlFor="model"
-              className="block mb-2 font-medium text-left text-black md:text-xl font-sans"
+              className="block mb-2 font-medium text-left text-primary50 md:text-xl font-sans"
             >
               Car Model
             </label>
@@ -64,13 +72,13 @@ function Add_Car({ addCar, editCar, editCarData, isEditing, setIsEditing }) {
               required
               type="text"
               id="model"
-              className="block w-full p-2 rounded-lg text-xs focus:ring-blue-500 focus:border-blue-500 text-left bg-white2 h-10"
+              className="block w-full p-2 border border-gray-300 rounded-lg text-xs focus:ring-blue-500 focus:border-blue-500 text-left bg-white h-10"
             />
           </div>
           <div className="mb-5">
             <label
               htmlFor="price"
-              className="block mb-2 font-medium text-left text-black md:text-xl font-sans"
+              className="block mb-2 font-medium text-left text-primary50 md:text-xl font-sans"
             >
               Car Price
             </label>
@@ -82,14 +90,14 @@ function Add_Car({ addCar, editCar, editCarData, isEditing, setIsEditing }) {
               name="price"
               value={car.price}
               onChange={handleChange}
-              className="block w-full p-2 rounded-lg text-xs focus:ring-blue-500 focus:border-blue-500 text-left bg-white2 h-10"
+              className="block w-full p-2 border border-gray-300 rounded-lg text-xs focus:ring-blue-500 focus:border-blue-500 text-left bg-white2 h-10"
             />
           </div>
 
           <div className="mb-5">
             <label
               htmlFor="color"
-              class="block mb-2 font-medium text-left text-black md:text-xl font-sans"
+              class="block mb-2 font-medium text-left text-primary50 md:text-xl font-sans"
             >
               Choose Color
             </label>
@@ -114,7 +122,7 @@ function Add_Car({ addCar, editCar, editCarData, isEditing, setIsEditing }) {
             <div className="md:w-1/4">
               <label
                 htmlFor="date-input"
-                className="block mb-2 font-medium text-left text-black md:text-xl font-sans"
+                className="block mb-2 font-medium text-left text-primary50 md:text-xl font-sans"
               >
                 Manufacture Date
               </label>
@@ -125,7 +133,7 @@ function Add_Car({ addCar, editCar, editCarData, isEditing, setIsEditing }) {
                 type="date"
                 name="manufactureDate"
                 id="date-input"
-                className="block w-full p-2 rounded-lg text-xs focus:ring-blue-500 focus:border-blue-500 text-left bg-white2"
+                className="block w-full p-2 border border-gray-300 rounded-lg text-xs focus:ring-blue-500 focus:border-blue-500 text-left bg-white2"
               />
             </div>
           </div>
@@ -133,7 +141,7 @@ function Add_Car({ addCar, editCar, editCarData, isEditing, setIsEditing }) {
           <div className="m-5 flex justify-end">
             <button
               type="submit"
-              className="flex h-10 mr-[-20px] rounded-md bg-primary400 font-sans md:pl-1 md:pt-2 md:pr-4 pr-4 pl-4 py-1.5 text-base font-semibold leading-6 text-white shadow-sm hover:bg-primary400 "
+              className="flex h-10 mr-[-20px] rounded-md bg-primary50 font-sans md:pl-1 md:pt-2 md:pr-4 pr-4 pl-4 py-1.5 text-base font-semibold leading-6 text-white shadow-sm hover:bg-primary50 "
             >
               <svg
                 width="22"

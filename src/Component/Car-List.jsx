@@ -1,36 +1,49 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { deleteCars, editCar,setSelectedCars,setLoading } from '../Store/carSlice';
+import { useDispatch, useSelector } from "react-redux";
 
-function Car_list({ cars, deleteCars, editCar }) {
-  const [selectedCars, setSelectedCars] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const navigate = useNavigate();
-  useEffect(() => {
-    setTimeout(() => setLoading(false), 1000);
-  }, []);
-
+function Car_list() {
+  const cars = useSelector((state) => state.cars.cars); // Access cars from Redux
+  const dispatch = useDispatch();
+  const selectedCars = useSelector((state) => state.cars.selectedCars);
+  const loading = useSelector((state) => state.cars.loading);
   const handleSelect = (id) => {
-    setSelectedCars((prev) =>
-      prev.includes(id) ? prev.filter((carId) => carId !== id) : [...prev, id]
-    );
+    
+    const updatedSelectedCars = selectedCars.includes(id)
+      ? selectedCars.filter((carId) => carId !== id)
+      : [...selectedCars, id];
+    dispatch(setSelectedCars(updatedSelectedCars)); 
   };
 
   const handleDelete = () => {
-    deleteCars(selectedCars);
+    dispatch(deleteCars(selectedCars)); 
     setSelectedCars([]);
   };
+
   const handleEdit = (car) => {
-    navigate("/", { state: { car } });
-  };
+    dispatch(editCar(car)); 
+  };  
+
+  
+  useEffect(() => {
+    // Set loading to true when fetching starts
+    dispatch(setLoading(true));
+
+    // Simulate a delay (e.g., fetching data or some other operation)
+    setTimeout(() => {
+      // After 1 second, set loading to false
+      dispatch(setLoading(false)); // Set loading to false after the "fetch"
+    }, 1000);
+  }, [dispatch]);
+
+ 
   if (loading) return <p className="text-center">LOADING...</p>;
 
   return (
     <div className="p-4">
+      <h2 className="text-xl font-bold">Car List</h2>
       {cars.map((car) => (
-        <div
-          key={car.id}
-          className="flex items-center justify-between p-2 border-b"
-        >
+        <div key={car.id} className="flex items-center justify-between p-2 border-b">
           <div>
             <input
               type="checkbox"
@@ -41,7 +54,7 @@ function Car_list({ cars, deleteCars, editCar }) {
           </div>
           <div>
             <button
-              onClick={() => editCar(car)} // Trigger editCar when Edit is clicked
+              onClick={() => handleEdit(car)}
               className="p-1 text-blue-500 hover:underline"
             >
               Edit

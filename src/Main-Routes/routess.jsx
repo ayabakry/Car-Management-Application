@@ -10,21 +10,23 @@ import {
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
 function Routess() {
-  // const dispatch = useDispatch();
-  // const cars = useSelector((state) => state.cars.cars);
+  const dispatch = useDispatch();
+  const cars = useSelector((state) => state.cars.cars);
 
-  // useEffect(() => {
-  //   const storedCars = loadFromLocalStorage('cars');
-  //   dispatch(setCars(storedCars));
-  // }, [dispatch]);
+  useEffect(() => {
+    const storedCars = loadFromLocalStorage("cars");
+    if (storedCars) {
+      dispatch(setCars(storedCars));
+    }
+  }, [dispatch]);
 
-  // useEffect(() => {
-  //   saveToLocalStorage('cars', cars);
-  // }, [cars]);
+  useEffect(() => {
+    saveToLocalStorage('cars', cars);
+  }, [cars]);
   return (
     <Router>
       <div className="container mx-auto p-4">
-        <h1 className="text-2xl font-bold text-center">Car Management</h1>
+        <h1 className="text-2xl font-bold text-center">Car Management Application</h1>
         <Routes>
           <Route path="/" element={<Add_Car />} />
           <Route path="/cars" element={<Car_list />} />
