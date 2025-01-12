@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { deleteCars, editCar, setSelectedCars, setLoading } from '../Store/carSlice';
 import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 
 function Car_list() {
   const cars = useSelector((state) => state.cars.cars); // Access cars from Redux
@@ -75,14 +76,23 @@ function Car_list() {
           </li>
         </ul>
       ))}
-      
+      <div className="mt-4 flex justify-end">
+        <Link
+          to="/"
+          className="p-2 bg-primary50 text-white rounded hover:bg-primary50"
+        >
+          Add another Car
+        </Link>
+      </div>
       {selectedCars.length > 0 && (
+         <div className="mt-4 flex justify-end">
         <button
           onClick={handleDelete}
           className="mt-4 p-2 bg-red-500 text-white rounded hover:bg-red-600"
         >
           Delete Selected
         </button>
+        </div>
       )}
     </div>
   </div>

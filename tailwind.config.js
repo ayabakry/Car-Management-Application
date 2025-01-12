@@ -9,9 +9,7 @@ module.exports = {
         primary50: '#16404D',
         
       },
-      fontFamily: {
-        sans: ['"IBM Plex Sans Arabic"', 'sans-serif'],
-      },
+    
       fontSize: {
         '6xl': '64px', 
         '5xl': '48px', 
