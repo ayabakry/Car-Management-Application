@@ -183,7 +183,7 @@ function Add_Car() {
             </button>
             <Link
               to="/"
-              className="mt-2 md:mt-0 flex h-10 rounded-md bg-primary50 font-sans md:pl-4 md:pt-2 md:pr-4  pl-4 py-1.5 text-base font-semibold leading-6 text-white shadow-sm"
+              className="mt-2 md:mt-0 flex h-10 rounded-md bg-primary50 md:w-auto w-[9rem] font-sans md:pl-4 md:pt-2 md:pr-4  pl-4 py-1.5 text-base font-semibold leading-6 text-white shadow-sm"
             >
               Show All Cars
             </Link>
