@@ -77,16 +77,15 @@ function Add_Car() {
                 Car Model
               </label>
               <input
-  name="model"
-  value={car.model}
-  onChange={handleChange}
-  placeholder="Add Car Model"
-  required
-  type="text"
-  id="model"
-  className="block w-full p-2 border border-gray-300 rounded-lg text-xs bg-white focus:ring-0 focus:outline-none focus:bg-white focus:border-blue-500 h-10"
-/>
-
+                name="model"
+                value={car.model}
+                onChange={handleChange}
+                placeholder="Add Car Model"
+                required
+                type="text"
+                id="model"
+                className="block w-full p-2 border border-gray-300 rounded-lg text-xs focus:bg-white focus:border-blue-500 text-left bg-white h-10"
+              />
             </div>
             <div className="md:w-80">
               <label
@@ -103,7 +102,7 @@ function Add_Car() {
                 name="price"
                 value={car.price}
                 onChange={handleChange}
-                className="block w-full p-2 border border-gray-300 rounded-lg text-xs  focus:border-blue-500 text-left bg-white2 h-10"
+                className="block w-full p-2 border border-gray-300 rounded-lg text-xs   text-left  h-10"
               />
             </div>
           </div>
@@ -121,7 +120,7 @@ function Add_Car() {
                 name="color"
                 value={car.color}
                 onChange={handleChange}
-                className=" border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5"
+                className=" border border-gray-300 text-gray400 text-sm rounded-lg block w-full p-2.5"
               >
                 <option value="" disabled>
                   Select Color
@@ -147,7 +146,7 @@ function Add_Car() {
                 type="date"
                 name="manufactureDate"
                 id="date-input"
-                className="block w-full p-2 border border-gray-300 rounded-lg text-xs  focus:border-blue-500 text-left bg-white2"
+                className="block w-full p-2 border border-gray400 rounded-lg text-xs  focus:border-blue-500 text-left bg-white"
               />
             </div>
           </div>

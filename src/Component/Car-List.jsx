@@ -86,7 +86,7 @@ function Car_list() {
             </svg>
           </div>
           {/* the total count of cars dynamically  */}
-          <h2 className="md:text-xl font-bold leading-none text-green-900 mr-2 text-right">
+          <h2 className="md:text-xl font-bold leading-none text-primary50 mr-2 text-right">
             Total Cars: {cars.length}
           </h2>
 

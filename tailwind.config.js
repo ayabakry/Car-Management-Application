@@ -8,8 +8,16 @@ module.exports = {
       colors: {
         primary50: '#16404D',
         
-      },
+        white:"#FFFFFF",
+        white2:"#F4F6FC",  
+        gray50:"#F5F5F5",     
+        gray400:"##222222",     
+        gray100:"#D9D9D9",     
     
+      },
+      fontFamily: {
+        sans: ['"IBM Plex Sans Arabic"', 'sans-serif'],
+      },
       fontSize: {
         '6xl': '64px', 
         '5xl': '48px', 

@@ -14,13 +14,13 @@ function ThankYou() {
         <div className="relative p-4 w-full max-w-md max-h-full z-50">
           <div className="relative bg-white rounded-lg shadow">
             <div className="p-4 md:p-5 text-center">
-              <h3 className="mb-5 text-lg font-normal text-gray-500">
+              <h3 className="mb-5 text-lg font-normal text-gray400">
                 Thank You! Your Process is Completed
               </h3>
               <button
                 data-modal-hide="popup-modal"
                 type="button"
-                className="text-white bg-primary50  focus:ring-4 focus:outline-none focus:ring-red-300  font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center"
+                className="text-white bg-primary50 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center"
               >
                 <Link to="/">Go Back</Link>
               </button>
