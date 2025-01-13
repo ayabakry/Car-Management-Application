@@ -6,7 +6,6 @@ const carSlice = createSlice({
     cars: [],
     selectedCars: [],
     loading: false,
-
   },
   reducers: {
     addCar: (state, action) => {
@@ -25,7 +24,7 @@ const carSlice = createSlice({
       state.cars = action.payload;
     },
     setSelectedCars: (state, action) => {
-      state.selectedCars = action.payload; 
+      state.selectedCars = action.payload;
     },
     setLoading: (state, action) => {
       state.loading = action.payload;
@@ -33,6 +32,14 @@ const carSlice = createSlice({
   },
 });
 
-export const { addCar, editCar, deleteCars, setCars, setSelectedCars,setLoading } = carSlice.actions;
+export const {
+  addCar,
+  editCar,
+  deleteCars,
+  setCars,
+  setSelectedCars,
+  setLoading,
+  setIsEditing,
+} = carSlice.actions;
 
 export default carSlice.reducer;

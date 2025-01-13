@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from 'react-redux';
-import { addCar, editCar, setCars } from '../Store/carSlice';
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { addCar, editCar, setCars } from "../Store/carSlice";
 
 function Add_Car() {
   const [car, setCar] = useState({
@@ -14,42 +14,36 @@ function Add_Car() {
   const dispatch = useDispatch();
   const cars = useSelector((state) => state.cars.cars);
   const navigate = useNavigate();
-
+  const location = useLocation();
 
   useEffect(() => {
-    if (car.id) {
+    if (location.state && location.state.car) {
+      setCar(location.state.car);
       setIsEditing(true);
     }
-  }, [car.id]);
-
-
-
+  }, [location.state]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setCar({ ...car, [name]: value });
   };
 
-
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!car.model || !car.price || !car.color || !car.manufactureDate) {
-      alert('All fields are required');
+      alert("All fields are required");
       return;
     }
     if (isEditing) {
-      dispatch(editCar(car)); // Dispatch the edit action
+      dispatch(editCar(car)); // Edit existing car
     } else {
-      dispatch(addCar({ ...car, id: Date.now() })); // Dispatch the add action
+      dispatch(addCar({ ...car, id: Date.now() })); // Add new car
     }
-    setCar({ id: null, model: '', price: '', color: '', manufactureDate: '' });
-    setIsEditing(false);
-    navigate('/cars'); // Navigate to the car list page after submission
+    navigate("/cars"); // Go back to the car list
   };
   return (
     <div className="relative flex flex-col md:flex-row justify-between ">
       <div className="container w-full md:w-[calc(100%-270px)] lg:w-[calc(100%-280px)] pt-10 pr-8 lg:pr-10 md:mr-[270px] lg:mr-[280px]">
-       
         <h2 className="mt-10 text-left md:text-3xl font-bold leading-9 tracking-tight text-primary50 font-sans ml-10">
           Add Car
         </h2>
@@ -171,11 +165,10 @@ function Add_Car() {
             </button>
           </div>
           <div className="m-5 flex justify-end">
-            <Link to="/cars"
-              
+            <Link
+              to="/cars"
               className="flex h-10 mr-[-20px] rounded-md bg-primary50 font-sans md:pl-4 md:pt-2 md:pr-4 pr-4 pl-4 py-1.5 text-base font-semibold leading-6 text-white shadow-sm hover:bg-primary50 "
             >
-             
               Show All Cars
             </Link>
           </div>
