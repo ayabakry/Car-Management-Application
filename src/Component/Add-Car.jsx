@@ -77,15 +77,16 @@ function Add_Car() {
                 Car Model
               </label>
               <input
-                name="model"
-                value={car.model}
-                onChange={handleChange}
-                placeholder="Add Car Model"
-                required
-                type="text"
-                id="model"
-                className="block w-full p-2 border border-gray-300 rounded-lg text-xs focus:ring-blue-500 focus:border-blue-500 text-left bg-white h-10"
-              />
+  name="model"
+  value={car.model}
+  onChange={handleChange}
+  placeholder="Add Car Model"
+  required
+  type="text"
+  id="model"
+  className="block w-full p-2 border border-gray-300 rounded-lg text-xs bg-white focus:ring-0 focus:outline-none focus:bg-white focus:border-blue-500 h-10"
+/>
+
             </div>
             <div className="md:w-80">
               <label
@@ -102,7 +103,7 @@ function Add_Car() {
                 name="price"
                 value={car.price}
                 onChange={handleChange}
-                className="block w-full p-2 border border-gray-300 rounded-lg text-xs focus:ring-blue-500 focus:border-blue-500 text-left bg-white2 h-10"
+                className="block w-full p-2 border border-gray-300 rounded-lg text-xs  focus:border-blue-500 text-left bg-white2 h-10"
               />
             </div>
           </div>
@@ -146,12 +147,12 @@ function Add_Car() {
                 type="date"
                 name="manufactureDate"
                 id="date-input"
-                className="block w-full p-2 border border-gray-300 rounded-lg text-xs focus:ring-blue-500 focus:border-blue-500 text-left bg-white2"
+                className="block w-full p-2 border border-gray-300 rounded-lg text-xs  focus:border-blue-500 text-left bg-white2"
               />
             </div>
           </div>
 
-          <div className="md:m-5 flex justify-center gap-5">
+          <div className="md:m-5 md:flex justify-center gap-5">
             <button
               type="submit"
               className="flex h-10 rounded-md bg-primary50 font-sans md:pl-1 md:pt-2 md:pr-4 pr-4 md:pl-2 py-1.5 text-base font-semibold leading-6 text-white shadow-sm hover:bg-primary50"
@@ -183,7 +184,7 @@ function Add_Car() {
             </button>
             <Link
               to="/"
-              className="flex h-10 rounded-md bg-primary50 font-sans md:pl-4 md:pt-2 md:pr-4 pr-4 pl-4 py-1.5 text-base font-semibold leading-6 text-white shadow-sm"
+              className="mt-2 md:mt-0 flex h-10 rounded-md bg-primary50 font-sans md:pl-4 md:pt-2 md:pr-4  pl-4 py-1.5 text-base font-semibold leading-6 text-white shadow-sm"
             >
               Show All Cars
             </Link>
