@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useCallback, useEffect } from "react";
 import {
   deleteCars,
   setCars,
@@ -15,21 +15,31 @@ function Car_list() {
   const navigate = useNavigate();
   const selectedCars = useSelector((state) => state.cars.selectedCars);
   const loading = useSelector((state) => state.cars.loading);
-  const handleSelect = (id) => {
-    const updatedSelectedCars = selectedCars.includes(id)
-      ? selectedCars.filter((carId) => carId !== id)
-      : [...selectedCars, id];
-    dispatch(setSelectedCars(updatedSelectedCars));
-  };
 
-  const handleDelete = () => {
+  // use GPT to help me write this code "usecallbak" because i have basic knowledge about it and i want to use it in the right way
+  const handleSelect = useCallback(
+    (id) => {
+      const updatedSelectedCars = selectedCars.includes(id)
+        ? selectedCars.filter((carId) => carId !== id)
+        : [...selectedCars, id];
+      dispatch(setSelectedCars(updatedSelectedCars));
+    },
+    [dispatch, selectedCars]
+  );
+
+  // use GPT to help me write this code "usecallbak" because i have basic knowledge about it and i want to use it in the right way
+  const handleDelete = useCallback(() => {
     dispatch(deleteCars(selectedCars));
-    setSelectedCars([]);
-  };
+    dispatch(setSelectedCars([]));
+  }, [dispatch, selectedCars]);
 
-  const handleEdit = (car) => {
-    navigate("/", { state: { car } }); // Navigate with car details
-  };
+  // use GPT to help me write this code "usecallbak" because i have basic knowledge about it and i want to use it in the right way
+  const handleEdit = useCallback(
+    (car) => {
+      navigate("/add-car", { state: { car } });
+    },
+    [navigate]
+  );
 
   useEffect(() => {
     dispatch(setLoading(true));
@@ -74,56 +84,69 @@ function Car_list() {
               />
             </svg>
           </div>
-          <div className="flow-root ">
-            {cars.map((car) => (
-              <ul
-                key={car.id}
-                role="list"
-                className="divide-y divide-gray-200 "
-              >
-                <li className="py-3 sm:py-4 ">
-                  <div className="flex items-center bg-primary50  p-2 rounded-lg">
-                    <div className="flex-1 min-w-0 ms-4 inline-flex items-center">
-                      <input
-                        type="checkbox"
-                        onChange={() => handleSelect(car.id)}
-                        checked={selectedCars.includes(car.id)}
-                      />
-                      <p className="text-xl font-medium text-primary50 truncate text-white ml-4">
-                        <span className="">{car.model}</span>
-                      </p>
-                    </div>
-                    <div className="flex justify-center items-center text-base font-semibold text-primary50">
-                      <button
-                        onClick={() => handleEdit(car)}
-                        className="p-1 flex items-center text-white"
-                      >
-                        Edit
-                        <svg
-                          className="ml-1.5"
-                          version="1.1"
-                          viewBox="0 0 2048 2048"
-                          width="16"
-                          height="16"
-                          xmlns="http://www.w3.org/2000/svg"
+          {/* the total count of cars dynamically  */}
+          <h2 className="md:text-xl font-bold leading-none text-green-900 mr-2 text-right">
+            Total Cars: {cars.length}
+          </h2>
+
+          {cars.length === 0 ? (
+            <p className="text-center text-primary50 font-semibold">
+              No Cars available. Add Your Car Now !
+            </p>
+          ) : (
+            <div className="flow-root">
+              {cars.map((car) => (
+                <ul
+                  key={car.id}
+                  role="list"
+                  className="divide-y divide-gray-200 "
+                >
+                  <li className="py-3 sm:py-4 ">
+                    <div className="flex items-center bg-primary50  p-2 rounded-lg">
+                      <div className="flex-1 min-w-0 ms-4 inline-flex items-center">
+                        <input
+                          type="checkbox"
+                          onChange={() => handleSelect(car.id)}
+                          checked={selectedCars.includes(car.id)}
+                        />
+                        <p className="text-xl font-medium text-primary50 truncate text-white ml-4">
+                          <span className="">{car.model}</span>
+                        </p>
+                      </div>
+                      <div className="flex justify-center items-center text-base font-semibold text-primary50">
+                        <button
+                          onClick={() => handleEdit(car)}
+                          className="p-1 flex items-center text-white"
                         >
-                          <path
-                            transform="translate(1612,108)"
-                            d="m0 0h34l21 3 16 4 21 8 19 10 12 8 13 10 12 11 132 132 9 11 8 11 8 13 8 16 7 19 6 25 2 17v25l-2 17-4 19-7 21-9 19-10 16-9 12-10 11-1 2h-2l-2 4-92 92-6 5-6 7-6 5-7 8-67 67-6 5-6 7-7 6-5 6-7 6-5 6-7 6-5 6-7 6-5 6-7 6-5 6-7 6-5 6-7 6-5 6-7 6-5 6-7 6-5 6-7 6-5 6-7 6-5 6-7 6-5 6-7 6-5 6-7 6-5 6-7 6-5 6-7 6-5 6-7 6-5 6-7 6-5 6-8 7-259 259-7 8-11 11-8 7-9 9-8 7-14 11-15 10-18 10-19 9-37 15-35 14-44 17-40 15-36 13-28 10-40 13-37 11-30 7-21 3h-13l-20-3-17-5-17-8-12-8-11-9-10-10-11-15-10-19-6-18-3-18v-22l3-19 9-36 14-45 17-50 21-57 15-40 13-33 14-35 13-32 12-25 9-14 13-18 11-12 9-10 12-12 7-8h2v-2l8-7 503-503 1-2h2l2-4 17-16 157-157 8-7 13-10 14-9 17-9 22-8 22-5zm13 129-12 2-10 4-12 9-123 123 1 4 197 197h2l1 3 3 1 8-7v-2h2v-2h2v-2h2v-2h2v-2h2v-2h2v-2l4-2v-2l4-2v-2l4-2v-2l4-2v-2l4-2v-2l4-2v-2l4-2v-2l4-2v-2l4-2 4-4v-2l4-2v-2l4-2 4-4v-2l4-2 48-48 9-13 4-10 2-13-1-13-4-12-5-9-11-13-26-26h-2l-2-4h-2l-2-4h-2l-2-4h-2l-2-4h-2l-2-4h-2l-2-4h-2l-2-4h-2l-2-4h-2l-2-4h-2l-2-4h-2l-2-4h-2l-2-4h-2l-2-4h-2l-2-4h-2l-2-4-35-35-12-9-12-5-12-2zm-249 231-8 7-421 421-2 1 2 4 12 13 3 1 2 4 158 158h2l2 4h2l2 4 8 8h2v2l8 7 4-1 7-8 231-231 2-1v-2h2v-2h2v-2l4-2v-2l4-2v-2l4-2v-2l4-2v-2l4-2v-2l4-2v-2l4-2v-2l4-2v-2l4-2v-2l4-2v-2l4-2v-2l4-2v-2l4-2v-2l4-2v-2l4-2v-2l4-2v-2l4-2v-2l4-2v-2l4-2v-2l4-2v-2l4-2v-2l4-2v-2l4-2v-2l4-2v-2l4-2v-2l4-2v-2l4-2v-2l4-2v-2l4-2v-2l4-2v-2l4-2v-2l4-2v-2l4-2 28-28v-2l4-2 4-4v-2l4-2 4-4v-2l4-2 3-3-1-5-201-201zm-518 527-5 10-15 37-18 44-6 16-15 38-11 29-8 21-10 29-12 37-8 31-2 9v4l20-4 29-8 40-13 44-16 84-33 37-15 41-17 9-4-2-4-191-191z"
-                            fill="#fff"
-                          />
-                          <path
-                            transform="translate(404,277)"
-                            d="m0 0h331l12 3 14 7 10 9 8 9 8 16 3 13v13l-3 14-4 10-9 13-7 7-11 7-12 5-9 2-9 1h-203l-112 1-17 2-25 6-19 7-21 11-12 8-13 10-12 11-7 7-11 14-9 13-8 14-8 17-7 22-4 20-2 22v1036l2 23 5 24 8 22 8 17 10 16 12 16 13 14 8 7 10 8 10 7 15 9 20 9 15 5 23 5 14 2 12 1 92 1h891l133-1 25-2 17-3 20-6 20-8 18-10 17-12 14-12 10-10 9-11 10-14 6-10 9-19 8-24 4-19 2-18 1-315 3-16 5-12 8-11 9-9 13-8 12-4 7-1h16l13 3 14 7 13 11 9 13 5 11 2 9 1 23v259l-1 49-2 21-4 23-6 25-9 26-12 27-12 22-12 18-8 11-9 11-12 14-16 16-11 9-8 7-19 14-18 11-22 12-23 10-27 9-24 6-32 5-30 2h-1114l-24-1-26-3-25-5-25-7-26-10-25-12-19-11-16-11-13-10-13-11-15-14-8-8-7-8-10-12-12-16-12-19-13-24-11-26-8-24-6-25-4-25-2-21-1-37v-979l1-44 2-22 5-29 7-26 8-23 8-18 8-16 11-19 8-12 12-16 11-13 9-10 17-17 11-9 14-11 24-16 18-10 23-11 21-8 24-7 29-6z"
-                            fill="#FEFEFE"
-                          />
-                        </svg>
-                      </button>
+                          Edit
+                          <svg
+                            className="ml-1.5"
+                            version="1.1"
+                            viewBox="0 0 2048 2048"
+                            width="16"
+                            height="16"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              transform="translate(1612,108)"
+                              d="m0 0h34l21 3 16 4 21 8 19 10 12 8 13 10 12 11 132 132 9 11 8 11 8 13 8 16 7 19 6 25 2 17v25l-2 17-4 19-7 21-9 19-10 16-9 12-10 11-1 2h-2l-2 4-92 92-6 5-6 7-6 5-7 8-67 67-6 5-6 7-7 6-5 6-7 6-5 6-7 6-5 6-7 6-5 6-7 6-5 6-7 6-5 6-7 6-5 6-7 6-5 6-7 6-5 6-7 6-5 6-7 6-5 6-7 6-5 6-7 6-5 6-7 6-5 6-7 6-5 6-7 6-5 6-7 6-5 6-7 6-5 6-8 7-259 259-7 8-11 11-8 7-9 9-8 7-14 11-15 10-18 10-19 9-37 15-35 14-44 17-40 15-36 13-28 10-40 13-37 11-30 7-21 3h-13l-20-3-17-5-17-8-12-8-11-9-10-10-11-15-10-19-6-18-3-18v-22l3-19 9-36 14-45 17-50 21-57 15-40 13-33 14-35 13-32 12-25 9-14 13-18 11-12 9-10 12-12 7-8h2v-2l8-7 503-503 1-2h2l2-4 17-16 157-157 8-7 13-10 14-9 17-9 22-8 22-5zm13 129-12 2-10 4-12 9-123 123 1 4 197 197h2l1 3 3 1 8-7v-2h2v-2h2v-2h2v-2h2v-2h2v-2h2v-2l4-2v-2l4-2v-2l4-2v-2l4-2v-2l4-2v-2l4-2v-2l4-2v-2l4-2v-2l4-2 4-4v-2l4-2v-2l4-2 4-4v-2l4-2 48-48 9-13 4-10 2-13-1-13-4-12-5-9-11-13-26-26h-2l-2-4h-2l-2-4h-2l-2-4h-2l-2-4h-2l-2-4h-2l-2-4h-2l-2-4h-2l-2-4h-2l-2-4h-2l-2-4h-2l-2-4h-2l-2-4h-2l-2-4h-2l-2-4h-2l-2-4-35-35-12-9-12-5-12-2zm-249 231-8 7-421 421-2 1 2 4 12 13 3 1 2 4 158 158h2l2 4h2l2 4 8 8h2v2l8 7 4-1 7-8 231-231 2-1v-2h2v-2h2v-2l4-2v-2l4-2v-2l4-2v-2l4-2v-2l4-2v-2l4-2v-2l4-2v-2l4-2v-2l4-2v-2l4-2v-2l4-2v-2l4-2v-2l4-2v-2l4-2v-2l4-2v-2l4-2v-2l4-2v-2l4-2v-2l4-2v-2l4-2v-2l4-2v-2l4-2v-2l4-2v-2l4-2v-2l4-2v-2l4-2v-2l4-2v-2l4-2v-2l4-2v-2l4-2v-2l4-2v-2l4-2v-2l4-2 28-28v-2l4-2 4-4v-2l4-2 4-4v-2l4-2 3-3-1-5-201-201zm-518 527-5 10-15 37-18 44-6 16-15 38-11 29-8 21-10 29-12 37-8 31-2 9v4l20-4 29-8 40-13 44-16 84-33 37-15 41-17 9-4-2-4-191-191z"
+                              fill="#fff"
+                            />
+                            <path
+                              transform="translate(404,277)"
+                              d="m0 0h331l12 3 14 7 10 9 8 9 8 16 3 13v13l-3 14-4 10-9 13-7 7-11 7-12 5-9 2-9 1h-203l-112 1-17 2-25 6-19 7-21 11-12 8-13 10-12 11-7 7-11 14-9 13-8 14-8 17-7 22-4 20-2 22v1036l2 23 5 24 8 22 8 17 10 16 12 16 13 14 8 7 10 8 10 7 15 9 20 9 15 5 23 5 14 2 12 1 92 1h891l133-1 25-2 17-3 20-6 20-8 18-10 17-12 14-12 10-10 9-11 10-14 6-10 9-19 8-24 4-19 2-18 1-315 3-16 5-12 8-11 9-9 13-8 12-4 7-1h16l13 3 14 7 13 11 9 13 5 11 2 9 1 23v259l-1 49-2 21-4 23-6 25-9 26-12 27-12 22-12 18-8 11-9 11-12 14-16 16-11 9-8 7-19 14-18 11-22 12-23 10-27 9-24 6-32 5-30 2h-1114l-24-1-26-3-25-5-25-7-26-10-25-12-19-11-16-11-13-10-13-11-15-14-8-8-7-8-10-12-12-16-12-19-13-24-11-26-8-24-6-25-4-25-2-21-1-37v-979l1-44 2-22 5-29 7-26 8-23 8-18 8-16 11-19 8-12 12-16 11-13 9-10 17-17 11-9 14-11 24-16 18-10 23-11 21-8 24-7 29-6z"
+                              fill="#FEFEFE"
+                            />
+                          </svg>
+                        </button>
+                      </div>
                     </div>
-                  </div>
-                </li>
-              </ul>
-            ))}
+                  </li>
+                </ul>
+              ))}
+            </div>
+          )}
+          <div className="flow-root ">
             <div className="mt-4 flex justify-end items-center">
               <Link
                 to="/add-car"
@@ -160,9 +183,37 @@ function Car_list() {
               <div className="mt-4 flex justify-end">
                 <button
                   onClick={handleDelete}
-                  className="mt-4 p-2 bg-red-500 text-white rounded hover:bg-red-600"
+                  className="mt-4 p-2 bg-red-500 text-white rounded hover:bg-red-600 flex items-center space-x-2"
                 >
-                  Delete Selected
+                  <svg
+                    version="1.1"
+                    viewBox="0 0 1024 1024"
+                    width="20"
+                    height="20"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      transform="translate(215,330)"
+                      d="m0 0h10l10 3 8 6 7 9 3 11 4 58 16 240 6 77 4 33 4 22 6 20 5 11 6 10 7 8 10 7 15 7 21 5 24 3 43 2h183l36-2 23-3 21-5 14-6 10-7 9-9 6-10 6-15 6-22 4-24 4-40 8-113 15-225 2-24 4-11 9-10 9-5 5-1h11l11 4 10 9 5 10 1 4v16l-7 101-7 107-8 119-4 46-4 31-4 23-6 23-8 21-9 16-8 11-9 10-5 5-9 8-16 10-17 8-16 5-22 5-23 3-26 2-22 1h-189l-40-2-32-4-25-6-16-6-16-8-13-9-12-11-8-8-10-14-9-16-6-15-5-16-5-22-5-34-4-43-8-113-14-210-1-14v-21l4-10 7-8 5-4z"
+                      fill="#FEFEFE"
+                    />
+                    <path
+                      transform="translate(411,53)"
+                      d="m0 0h183l15 2 17 6 14 8 10 8 11 11 7 10 8 16 12 34 6 11 8 9 14 8 10 3 8 1 140 1 9 4 7 5 6 8 3 8v14l-4 10-9 10-9 4-12 2h-725l-10-2-9-5-7-8-5-10-1-8 2-10 4-8 6-7 10-6 4-1 39-1h54l54-1 13-4 10-6 5-4 1-2h2l10-20 10-29 8-16 12-16 10-9 14-9 13-6 15-4zm4 65-8 3-8 6-6 10-9 25-6 16 1 3h251l-1-5-9-25-6-16-6-9-9-6-7-2z"
+                      fill="#fff"
+                    />
+                    <path
+                      transform="translate(611,437)"
+                      d="m0 0h14l8 3 9 6 6 8 3 9v17l-4 38-7 69-6 60-4 39-3 11-6 9-7 6-8 3-13 1-10-3-6-4-7-7-5-11v-20l10-99 10-100 3-15 6-10 11-8z"
+                      fill="#fff"
+                    />
+                    <path
+                      transform="translate(398,437)"
+                      d="m0 0h14l12 5 8 8 4 8 3 16 12 121 8 78v17l-4 10-8 9-12 6h-17l-12-6-7-8-4-9-3-23-18-179-1-9v-19l4-10 7-8 8-5z"
+                      fill="#FEFEFE"
+                    />
+                  </svg>
+                  <span>Delete Car</span>
                 </button>
               </div>
             )}
