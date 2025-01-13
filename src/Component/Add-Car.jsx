@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { addCar, editCar, setCars } from "../Store/carSlice";
+import { addCar, editCar, setIsEditing } from "../Store/carSlice";
 
 function Add_Car() {
   const [car, setCar] = useState({
@@ -10,18 +10,19 @@ function Add_Car() {
     color: "",
     manufactureDate: "",
   });
-  const [isEditing, setIsEditing] = useState(false);
+  const isEditing = useSelector((state) => state.cars.isEditing);
   const dispatch = useDispatch();
-  const cars = useSelector((state) => state.cars.cars);
   const navigate = useNavigate();
   const location = useLocation();
 
   useEffect(() => {
     if (location.state && location.state.car) {
       setCar(location.state.car);
-      setIsEditing(true);
+      dispatch(setIsEditing(true));
+    } else {
+      dispatch(setIsEditing(false));
     }
-  }, [location.state]);
+  }, [location.state, dispatch]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -35,11 +36,11 @@ function Add_Car() {
       return;
     }
     if (isEditing) {
-      dispatch(editCar(car)); // Edit existing car
+      dispatch(editCar(car));
     } else {
-      dispatch(addCar({ ...car, id: Date.now() })); // Add new car
+      dispatch(addCar({ ...car, id: Date.now() }));
     }
-    navigate("/"); // Go back to the car list
+    navigate("/");
   };
   return (
     <div className="relative flex flex-col md:flex-row justify-center items-center  ">
@@ -201,55 +202,6 @@ function Add_Car() {
         </form>
       </div>
     </div>
-    // <form
-    //   className="flex flex-col gap-4 p-4 border rounded shadow-md"
-    //   onSubmit={handleSubmit}
-    // >
-    //   <input
-    //     type="text"
-    //     name="model"
-    //     value={car.model}
-    //     onChange={handleChange}
-    //     placeholder="Car Model"
-    //     className="p-2 border rounded"
-    //   />
-    //   <input
-    //     type="number"
-    //     name="price"
-    //     value={car.price}
-    //     onChange={handleChange}
-    //     placeholder="Price"
-    //     className="p-2 border rounded"
-    //   />
-    //   <select
-    //     name="color"
-    //     value={car.color}
-    //     onChange={handleChange}
-    //     className="p-2 border rounded"
-    //   >
-    //     <option value="" disabled>
-    //       Select Color
-    //     </option>
-    //     <option value="Red">Red</option>
-    //     <option value="Blue">Blue</option>
-    //     <option value="Green">Green</option>
-    //     <option value="Black">Black</option>
-    //     <option value="White">White</option>
-    //   </select>
-    //   <input
-    //     type="date"
-    //     name="manufactureDate"
-    //     value={car.manufactureDate}
-    //     onChange={handleChange}
-    //     className="p-2 border rounded"
-    //   />
-    //   <button
-    //     type="submit"
-    //     className="p-2 bg-blue-500 text-white rounded hover:bg-blue-600"
-    //   >
-    //     {isEditing ? "Save Changes" : "Add Car"}
-    //   </button>
-    // </form>
   );
 }
 export default Add_Car;

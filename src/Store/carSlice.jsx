@@ -3,9 +3,11 @@ import { createSlice } from "@reduxjs/toolkit";
 const carSlice = createSlice({
   name: "cars",
   initialState: {
-    cars: [],
+    cars: { model: "", price: "", color: "", manufactureDate: "" },
     selectedCars: [],
+    isEditing: false,
     loading: false,
+    successMessage: "",
   },
   reducers: {
     addCar: (state, action) => {
@@ -26,7 +28,13 @@ const carSlice = createSlice({
     setSelectedCars: (state, action) => {
       state.selectedCars = action.payload;
     },
+    setIsEditing: (state, action) => {
+      state.isEditing = action.payload;
+    },
     setLoading: (state, action) => {
+      state.loading = action.payload;
+    },
+    setSuceessM: (state, action) => {
       state.loading = action.payload;
     },
   },

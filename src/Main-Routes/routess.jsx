@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setCars, addCar, editCar, deleteCars } from "../Store/carSlice";
+import { setCars } from "../Store/carSlice";
 import Add_Car from "../Component/Add-Car";
 import Car_list from "../Component/Car-List";
 import {

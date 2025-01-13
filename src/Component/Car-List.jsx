@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import {
   deleteCars,
   setCars,
@@ -15,7 +15,6 @@ function Car_list() {
   const navigate = useNavigate();
   const selectedCars = useSelector((state) => state.cars.selectedCars);
   const loading = useSelector((state) => state.cars.loading);
-
   const handleSelect = (id) => {
     const updatedSelectedCars = selectedCars.includes(id)
       ? selectedCars.filter((carId) => carId !== id)
@@ -25,11 +24,11 @@ function Car_list() {
 
   const handleDelete = () => {
     dispatch(deleteCars(selectedCars));
-    dispatch(setSelectedCars([]));
+    setSelectedCars([]);
   };
 
   const handleEdit = (car) => {
-    navigate("/add-car", { state: { car } }); // Navigate with car details
+    navigate("/", { state: { car } }); // Navigate with car details
   };
 
   useEffect(() => {
