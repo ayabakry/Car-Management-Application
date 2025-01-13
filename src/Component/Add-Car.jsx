@@ -39,7 +39,7 @@ function Add_Car() {
     } else {
       dispatch(addCar({ ...car, id: Date.now() })); // Add new car
     }
-    navigate("/cars"); // Go back to the car list
+    navigate("/"); // Go back to the car list
   };
   return (
     <div className="relative flex flex-col md:flex-row justify-center items-center  ">
@@ -192,7 +192,7 @@ function Add_Car() {
               {isEditing ? "Save Changes" : "Add Car"}
             </button>
             <Link
-              to="/cars"
+              to="/"
               className="flex h-10 rounded-md bg-primary50 font-sans md:pl-4 md:pt-2 md:pr-4 pr-4 pl-4 py-1.5 text-base font-semibold leading-6 text-white shadow-sm"
             >
               Show All Cars

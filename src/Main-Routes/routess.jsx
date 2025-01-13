@@ -56,8 +56,8 @@ function Routess() {
           </h1>
         </div>
         <Routes>
-          <Route path="/" element={<Add_Car />} />
-          <Route path="/cars" element={<Car_list />} />
+          <Route path="/" element={<Car_list />} />
+          <Route path="/add-car" element={<Add_Car />} />
         </Routes>
       </div>
     </Router>

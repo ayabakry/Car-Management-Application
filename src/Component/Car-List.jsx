@@ -15,6 +15,7 @@ function Car_list() {
   const navigate = useNavigate();
   const selectedCars = useSelector((state) => state.cars.selectedCars);
   const loading = useSelector((state) => state.cars.loading);
+
   const handleSelect = (id) => {
     const updatedSelectedCars = selectedCars.includes(id)
       ? selectedCars.filter((carId) => carId !== id)
@@ -24,11 +25,11 @@ function Car_list() {
 
   const handleDelete = () => {
     dispatch(deleteCars(selectedCars));
-    setSelectedCars([]);
+    dispatch(setSelectedCars([]));
   };
 
   const handleEdit = (car) => {
-    navigate("/", { state: { car } }); // Navigate with car details
+    navigate("/add-car", { state: { car } }); // Navigate with car details
   };
 
   useEffect(() => {
@@ -126,7 +127,7 @@ function Car_list() {
             ))}
             <div className="mt-4 flex justify-end items-center">
               <Link
-                to="/"
+                to="/add-car"
                 className="p-2 pr-4 bg-primary50 text-white rounded hover:bg-primary50 flex items-center"
               >
                 <svg
