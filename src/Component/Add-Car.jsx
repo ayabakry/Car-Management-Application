@@ -40,7 +40,7 @@ function Add_Car() {
     } else {
       dispatch(addCar({ ...car, id: Date.now() }));
     }
-    navigate("/");
+    navigate("/thank-you");
   };
   return (
     <div className="relative flex flex-col md:flex-row justify-center items-center  ">

@@ -31,6 +31,7 @@ function Car_list() {
   const handleDelete = useCallback(() => {
     dispatch(deleteCars(selectedCars));
     dispatch(setSelectedCars([]));
+    navigate("/thank-you");
   }, [dispatch, selectedCars]);
 
   // use GPT to help me write this code "usecallbak" because i have basic knowledge about it and i want to use it in the right way

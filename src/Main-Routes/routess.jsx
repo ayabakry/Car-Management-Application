@@ -8,6 +8,7 @@ import {
   saveToLocalStorage,
 } from "../Utils/localStorageUtils";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import ThankYou from "../Page/ThankYou";
 
 function Routess() {
   const dispatch = useDispatch();
@@ -58,6 +59,7 @@ function Routess() {
         <Routes>
           <Route path="/" element={<Car_list />} />
           <Route path="/add-car" element={<Add_Car />} />
+          <Route path="/thank-you" element={<ThankYou />} />
         </Routes>
       </div>
     </Router>
