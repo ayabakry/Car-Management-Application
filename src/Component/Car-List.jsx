@@ -37,9 +37,9 @@ function Car_list() {
   // Handle editing a car and use GPT to help me write this code "usecallbak" because i have basic knowledge about it and i want to use it in the right way
   const handleEdit = useCallback(
     (car) => {
-      dispatch(setCar(car)); // Set the selected car in Redux state
-      dispatch(setIsEditing(true)); // Set editing state to true
-      navigate("/add-car"); // Pass the car object via state
+      dispatch(setCar(car));
+      dispatch(setIsEditing(true));
+      navigate("/add-car");
     },
     [dispatch, navigate]
   );
@@ -91,7 +91,7 @@ function Car_list() {
           <h2 className="md:text-xl font-bold leading-none text-primary50 mr-2 text-right">
             Total Cars: {cars.length}
           </h2>
-
+          <br></br>
           {cars.length === 0 ? (
             <p className="text-center text-primary50 font-semibold">
               No Cars available. Add Your Car Now !
@@ -149,6 +149,7 @@ function Car_list() {
               ))}
             </div>
           )}
+
           <div className="flow-root ">
             <div className="mt-4 flex justify-end items-center">
               <Link

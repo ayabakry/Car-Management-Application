@@ -22,7 +22,7 @@ function ThankYou() {
                 type="button"
                 className="text-white bg-primary50 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center"
               >
-                <Link to="/">Go Back</Link>
+                <Link to="/">Done</Link>
               </button>
             </div>
           </div>

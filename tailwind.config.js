@@ -7,12 +7,8 @@ module.exports = {
     extend: {
       colors: {
         primary50: '#16404D',
-        
-        white:"#FFFFFF",
-        white2:"#F4F6FC",  
-        gray50:"#F5F5F5",     
+        white:"#FFFFFF",    
         gray400:"##222222",     
-        gray100:"#D9D9D9",     
     
       },
       fontFamily: {
