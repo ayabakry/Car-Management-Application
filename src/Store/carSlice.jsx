@@ -8,7 +8,6 @@ const carSlice = createSlice({
     isEditing: false,
     loading: false,
     car: {
-      // Car being added/edited
       model: "",
       price: "",
       color: "",
@@ -17,9 +16,13 @@ const carSlice = createSlice({
   },
   reducers: {
     addCar: (state, action) => {
+      // use GPT for help because when i try to add new car can't see the attribute of it
+      // Check if state.cars is an array
       if (Array.isArray(state.cars)) {
+        // If it is an array, add the new car (action.payload) to the array
         state.cars.push(action.payload);
       } else {
+        // If it is not an array, log an error message to the console
         console.error("state.cars is not an array");
       }
     },

@@ -10,7 +10,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 
 function Car_list() {
-  const cars = useSelector((state) => state.cars.cars); // Access cars from Redux
+  const cars = useSelector((state) => state.cars.cars);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const selectedCars = useSelector((state) => state.cars.selectedCars);

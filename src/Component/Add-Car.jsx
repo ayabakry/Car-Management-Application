@@ -1,22 +1,15 @@
-import { useState, useEffect } from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  addCar,
-  editCar,
-  setIsEditing,
-  setCars,
-  setCar,
-} from "../Store/carSlice";
+import { addCar, editCar, setCar } from "../Store/carSlice";
 
 function Add_Car() {
   const car = useSelector((state) => state.cars.car);
   const isEditing = useSelector((state) => state.cars.isEditing);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const location = useLocation();
 
-  // handle pre-existing data form if editing an existing car
+  // handle pre-existing form data if editing an existing car
   useEffect(() => {
     if (!isEditing) {
       dispatch(
@@ -37,7 +30,6 @@ function Add_Car() {
       return;
     }
     // Dispatch appropriate action based on editing state
-
     if (isEditing) {
       dispatch(editCar(car));
     } else {
@@ -45,6 +37,7 @@ function Add_Car() {
     }
     navigate("/thank-you");
   };
+
   return (
     <div className=" w-full flex justify-center items-center">
       <div className="relative flex flex-col md:flex-row justify-center items-center">

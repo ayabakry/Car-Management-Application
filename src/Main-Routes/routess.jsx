@@ -14,7 +14,7 @@ function Routess() {
   const dispatch = useDispatch();
   const cars = useSelector((state) => state.cars.cars);
 
-  //  load cars from local storage
+  // load cars from local storage
   useEffect(() => {
     const storedCars = loadFromLocalStorage("cars");
     if (storedCars) {
@@ -22,7 +22,7 @@ function Routess() {
     }
   }, [dispatch]);
 
-  //  save cars to local storage whenever the cars state changes
+  // save cars to local storage whenever the cars state changes
   useEffect(() => {
     saveToLocalStorage("cars", cars);
   }, [cars]);
