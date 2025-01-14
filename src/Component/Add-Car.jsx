@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { addCar, editCar, setCar } from "../Store/carSlice";
+import { addCar, editCar, setCar,setIsEditing } from "../Store/carSlice";
 
 function Add_Car() {
   const car = useSelector((state) => state.cars.car);
@@ -35,6 +35,8 @@ function Add_Car() {
     } else {
       dispatch(addCar({ ...car, id: Date.now() }));
     }
+    dispatch(setIsEditing(false));
+    dispatch(setCar({ model: "", price: "", color: "", manufactureDate: "" }));
     navigate("/thank-you");
   };
 
