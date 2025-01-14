@@ -16,7 +16,7 @@ function Car_list() {
   const selectedCars = useSelector((state) => state.cars.selectedCars);
   const loading = useSelector((state) => state.cars.loading);
 
-  // use GPT to help me write this code "usecallbak" because i have basic knowledge about it and i want to use it in the right way
+  // Handle selecting and deselecting cars and use GPT to help me write this code "usecallbak" because i have basic knowledge about it and i want to use it in the right way
   const handleSelect = useCallback(
     (id) => {
       const updatedSelectedCars = selectedCars.includes(id)
@@ -27,14 +27,14 @@ function Car_list() {
     [dispatch, selectedCars]
   );
 
-  // use GPT to help me write this code "usecallbak" because i have basic knowledge about it and i want to use it in the right way
+  // Handle deleting selected cars and use GPT to help me write this code "usecallbak" because i have basic knowledge about it and i want to use it in the right way
   const handleDelete = useCallback(() => {
     dispatch(deleteCars(selectedCars));
     dispatch(setSelectedCars([]));
     navigate("/thank-you");
   }, [dispatch, selectedCars]);
 
-  // use GPT to help me write this code "usecallbak" because i have basic knowledge about it and i want to use it in the right way
+  // Handle editing a car and use GPT to help me write this code "usecallbak" because i have basic knowledge about it and i want to use it in the right way
   const handleEdit = useCallback(
     (car) => {
       navigate("/add-car", { state: { car } });
@@ -85,7 +85,7 @@ function Car_list() {
               />
             </svg>
           </div>
-          {/* the total count of cars dynamically  */}
+          {/* Bounes : the total count of cars dynamically  */}
           <h2 className="md:text-xl font-bold leading-none text-primary50 mr-2 text-right">
             Total Cars: {cars.length}
           </h2>

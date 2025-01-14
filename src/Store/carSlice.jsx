@@ -33,7 +33,6 @@ const carSlice = createSlice({
     setLoading: (state, action) => {
       state.loading = action.payload;
     },
-    
   },
 });
 
@@ -45,7 +44,6 @@ export const {
   setSelectedCars,
   setLoading,
   setIsEditing,
-  
 } = carSlice.actions;
 
 export default carSlice.reducer;
