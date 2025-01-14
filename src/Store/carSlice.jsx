@@ -7,10 +7,21 @@ const carSlice = createSlice({
     selectedCars: [],
     isEditing: false,
     loading: false,
+    car: {
+      // Car being added/edited
+      model: "",
+      price: "",
+      color: "",
+      manufactureDate: "",
+    },
   },
   reducers: {
     addCar: (state, action) => {
-      state.cars.push(action.payload);
+      if (Array.isArray(state.cars)) {
+        state.cars.push(action.payload);
+      } else {
+        console.error("state.cars is not an array");
+      }
     },
     editCar: (state, action) => {
       const index = state.cars.findIndex((car) => car.id === action.payload.id);
@@ -22,7 +33,7 @@ const carSlice = createSlice({
       state.cars = state.cars.filter((car) => !action.payload.includes(car.id));
     },
     setCars: (state, action) => {
-      state.cars = action.payload;
+      state.cars = Array.isArray(action.payload) ? action.payload : [];
     },
     setSelectedCars: (state, action) => {
       state.selectedCars = action.payload;
@@ -32,6 +43,9 @@ const carSlice = createSlice({
     },
     setLoading: (state, action) => {
       state.loading = action.payload;
+    },
+    setCar: (state, action) => {
+      state.car = action.payload;
     },
   },
 });
@@ -43,7 +57,9 @@ export const {
   setCars,
   setSelectedCars,
   setLoading,
+  setCar,
   setIsEditing,
+  resetCar,
 } = carSlice.actions;
 
 export default carSlice.reducer;

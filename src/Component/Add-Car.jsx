@@ -1,15 +1,16 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { addCar, editCar, setIsEditing } from "../Store/carSlice";
+import {
+  addCar,
+  editCar,
+  setIsEditing,
+  setCars,
+  setCar,
+} from "../Store/carSlice";
 
 function Add_Car() {
-  const [car, setCar] = useState({
-    model: "",
-    price: "",
-    color: "",
-    manufactureDate: "",
-  });
+  const car = useSelector((state) => state.cars.car);
   const isEditing = useSelector((state) => state.cars.isEditing);
 
   const dispatch = useDispatch();
@@ -18,17 +19,21 @@ function Add_Car() {
 
   // handle pre-existing data form if editing an existing car
   useEffect(() => {
-    if (location.state && location.state.car) {
-      setCar(location.state.car);
-      dispatch(setIsEditing(true));
+    if (location.state?.car) {
+      dispatch(setCar(location.state.car)); // Pre-fill form with car data
+      dispatch(setIsEditing(true)); // Mark as editing
     } else {
+      // If no car data, reset to default for adding a new car
+      dispatch(
+        setCar({ model: "", price: "", color: "", manufactureDate: "" })
+      );
       dispatch(setIsEditing(false));
     }
   }, [location.state, dispatch]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setCar({ ...car, [name]: value });
+    dispatch(setCar({ ...car, [name]: value }));
   };
 
   const handleSubmit = (e) => {

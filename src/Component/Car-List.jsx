@@ -1,7 +1,7 @@
 import { useCallback, useEffect } from "react";
 import {
   deleteCars,
-  setCars,
+  setCar,
   setSelectedCars,
   setLoading,
   setIsEditing,
@@ -37,9 +37,11 @@ function Car_list() {
   // Handle editing a car and use GPT to help me write this code "usecallbak" because i have basic knowledge about it and i want to use it in the right way
   const handleEdit = useCallback(
     (car) => {
-      navigate("/add-car", { state: { car } });
+      dispatch(setCar(car)); // Set the selected car in Redux state
+      dispatch(setIsEditing(true)); // Set editing state to true
+      navigate("/add-car", { state: { car } }); // Pass the car object via state
     },
-    [navigate]
+    [dispatch, navigate]
   );
 
   useEffect(() => {
