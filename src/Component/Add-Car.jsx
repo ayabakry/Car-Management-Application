@@ -12,24 +12,18 @@ import {
 function Add_Car() {
   const car = useSelector((state) => state.cars.car);
   const isEditing = useSelector((state) => state.cars.isEditing);
-
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
 
   // handle pre-existing data form if editing an existing car
   useEffect(() => {
-    if (location.state?.car) {
-      dispatch(setCar(location.state.car)); // Pre-fill form with car data
-      dispatch(setIsEditing(true)); // Mark as editing
-    } else {
-      // If no car data, reset to default for adding a new car
+    if (!isEditing) {
       dispatch(
         setCar({ model: "", price: "", color: "", manufactureDate: "" })
       );
-      dispatch(setIsEditing(false));
     }
-  }, [location.state, dispatch]);
+  }, [isEditing, dispatch]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;

@@ -39,7 +39,7 @@ function Car_list() {
     (car) => {
       dispatch(setCar(car)); // Set the selected car in Redux state
       dispatch(setIsEditing(true)); // Set editing state to true
-      navigate("/add-car", { state: { car } }); // Pass the car object via state
+      navigate("/add-car"); // Pass the car object via state
     },
     [dispatch, navigate]
   );
